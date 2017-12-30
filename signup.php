@@ -1,7 +1,6 @@
 <?php
 //<!--Start session-->
 require("config.php");
-//Connect to the database
 
 //<!--Check user inputs-->
     // <!--Define error messages-->

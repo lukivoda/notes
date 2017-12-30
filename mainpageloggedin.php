@@ -1,9 +1,7 @@
 <?php
-//session_start();
-//if(!isset($_SESSION['user_id'])){
-//    header("location: index.php");
-//}
-//?>
+require("config.php");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +91,7 @@
                       <li class="active"><a href="#">My Notes</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">Logged in as <b>Stevce</b></a></li>
+                      <li><a href="#">Logged in as <b><?php echo $_SESSION['username']; ?></b></a></li>
                     <li><a href="index.php?logout=1">Log out</a></li>
                   </ul>
               

@@ -35,7 +35,7 @@ class Active extends Db
     public static function get($filter = "") {
         $db = Db::getConnection();
         $tabela = static::$table;
-        $res = $db->query("SELECT * FROM {$tabela}{$filter}");
+        $res = $db->query("SELECT * FROM {$tabela} {$filter}");
         $res->setFetchMode(PDO::FETCH_CLASS,get_called_class());
         $output = [];
         while ($rw = $res->fetch()) {

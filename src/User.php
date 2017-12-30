@@ -27,5 +27,21 @@ class User extends Active {
        }
    }
 
+    public function login() {
+        $db = DB::getConnection();
+        try{
+            $loginQuery = "SELECT * FROM users WHERE email = :email AND password = :password AND activation = 'activated' LIMIT 1";
+            $statement = $db->prepare($loginQuery);
+            $statement->execute(array(":email" => $this->email,':password'=>$this->password));
+            if ($statement->rowCount() === 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (PDOException $ex){
+            echo "An error occured ".$ex->getMessage();
+        }
+    }
+
 
 }
