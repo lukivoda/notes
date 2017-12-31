@@ -44,4 +44,58 @@ class User extends Active {
     }
 
 
+    public function rememberMe($id){
+       $encryptCookieData = base64_encode("mfPv5C1oLjQhEXCM2DfZ123$id");
+       //cookie expires in 15 days('/' means that cookie is available in whole domain)
+       setcookie('rememberme',$encryptCookieData,time()+15*24*60*60,'/');
+    }
+
+
+
+    public function isCookieValid(){
+       $isValid =  false;
+
+        if(isset($_COOKIE['rememberme'])){
+
+            $decryptCookieData = base64_decode($_COOKIE['rememberme']);
+            $user_id = explode("mfPv5C1oLjQhEXCM2DfZ123",$decryptCookieData);
+            $userId = $user_id[1];
+
+            if($this->getById($userId)){
+                $row = $this->getById($userId);
+                $_SESSION['user_id'] = $row->user_id;
+                $_SESSION['username'] = $row->username;
+                $isValid =true;
+            }else{
+                $isValid = false;
+                $this->logOut();
+            }
+        }
+
+        return $isValid;
+
+    }
+
+
+
+
+    public function logOut(){
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+
+        if(isset($_COOKIE['rememberme'])){
+            unset($_COOKIE['rememberme']);
+            setcookie('rememberme',null,-1,'/');
+        }
+
+        session_destroy();
+        session_regenerate_id(true);
+        header("Location:index.php");
+
+    }
+
+    public function redirectTo($page){
+        header("Location:$page");
+    }
+
 }

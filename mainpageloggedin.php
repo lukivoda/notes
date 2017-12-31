@@ -1,5 +1,7 @@
 <?php
 require("config.php");
+//we are saving the value from user from the session value
+$username =($user->isCookieValid() || isset($_SESSION['username']))?$_SESSION['username']:'';
 
 ?>
 
@@ -91,7 +93,7 @@ require("config.php");
                       <li class="active"><a href="#">My Notes</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">Logged in as <b><?php echo $_SESSION['username']; ?></b></a></li>
+                      <li><a href="#">Logged in as <b></b><?php echo $username; ?></b></a></li>
                     <li><a href="index.php?logout=1">Log out</a></li>
                   </ul>
               

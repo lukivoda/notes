@@ -44,7 +44,7 @@ class Active extends Db
         return $output;
     }
 
-    public static function getById($id) {
+    public  function getById($id) {
         $db = Db::getConnection();
         $tabela = static::$table;
         $key = static::$key;

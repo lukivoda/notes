@@ -29,52 +29,32 @@ if($errors){
     echo $resultMessage;
     //if there are no errors
 }else {
-    $password = hash("sha256",$password);
-    $user = new User;
+    $password = hash("sha256", $password);
     $user->email = $email;
-    $user->password =$password;
+    $user->password = $password;
     //Check if combinaton of email & password exists
-    if($user->login()){
+    if ($user->login()) {
         //calling the get method to get the user object
         $row = $user->get("WHERE email='$user->email' ");
         //store the user credentials in session
         $_SESSION['user_id'] = $row[0]->user_id;
-        $_SESSION['username'] =  $row[0]->username;
-        $_SESSION['email'] =  $user->email;
+        $_SESSION['username'] = $row[0]->username;
+        $_SESSION['email'] = $user->email;
         //if remember me is not checked
-        if(empty($_POST["rememberme"])){
+        if (empty($_POST["rememberme"])) {
             echo "success";
         }else{
-            //Create two variables $authentificator1 and $authentificator2
-            //Store them in a cookie
-            //Run query to store them in rememberme table
+
+            $user->rememberMe($row[0]->user_id);
+            echo "success";
         }
 
-    }else{
+
+    } else {
         //If email & password don't match print error
         echo "<div class='alert alert-danger'>Your email and password do not match!</div>";
     }
-    //Run query: Check combinaton of email & password exists
 
-    //log the user in: Set session variables
-
-    //If remember me is not checked
-    //Create two variables $authentificator1 and $authentificator2
-
-    //2*2*...*2
-
-    //Store them in a cookie
-
-    //Run query to store them in rememberme table
 }
 
-
-//else
-//Create two variables $authentificator1 and $authentificator2
-//Store them in a cookie
-//Run query to store them in rememberme table
-//If query unsuccessful
-//print error
-//else
-//print "success"
 ?>

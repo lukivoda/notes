@@ -1,4 +1,18 @@
+<?php
+require("config.php");
+if(isset($_GET['logout'])){
+    $user->logOut();
+}
+//if we have session or cookie we are redirecting the user to the main page
+$redirect = ($user->isCookieValid() || isset($_SESSION['username']))?$user->redirectTo("mainpageloggedin"):'';
 
+
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
