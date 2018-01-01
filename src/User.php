@@ -94,6 +94,27 @@ class User extends Active {
 
     }
 
+
+    public function updatePassword($id){
+        $db = DB::getConnection();
+        try{
+            $updatePasswordQuery = "UPDATE users SET password = :password WHERE user_id =:id";
+            $statement = $db->prepare($updatePasswordQuery);
+            $statement->execute(array(":password" => $this->password,':id'=>$id));
+
+            if($statement->rowCount()>0 ){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (PDOException $ex){
+            echo "An error occured ".$ex->getMessage();
+        }
+
+    }
+
+
     public function redirectTo($page){
         header("Location:$page");
     }
