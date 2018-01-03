@@ -7,4 +7,12 @@ $decryptCookieData = base64_decode("mfPv5C1oLjQhEXCM2DfZ1234");
 $user = explode("mfPv5C1oLjQhEXCM2DfZ123",$decryptCookieData);
 print_r($user);
 //setcookie('rememberme',$encryptCookieData,time()+15*24*60*60,'/');
+?>
+
+<script>
+    var editMode = false;
+    if(editMode){
+        console.log("OK");
+    }
+</script>
 

@@ -30,4 +30,22 @@ class Note extends Active {
         }
     }
 
+
+    public function updateNote() {
+        $db = self::getConnection();
+        try{
+            $updateQuery = "UPDATE notes SET note = :note,time = :time WHERE id = :id";
+            $statement = $db->prepare($updateQuery);
+            $statement->execute(array(":note" => $this->note, ":time" => $this->time,":id" => $this->id));
+
+            if ($statement->rowCount() === 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (PDOException $ex){
+            echo "An error occured ".$ex->getMessage();
+        }
+    }
+
 }

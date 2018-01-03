@@ -6,7 +6,6 @@ function __autoload($ime_na_klasa){
 }
 
 $user = new User();
-$forgotpassword = new ForgotPassword();
 $note = new Note();
 
 ?>

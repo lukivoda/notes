@@ -23,6 +23,8 @@ class Active extends Db
         //$keyF = static::$key;
         $sql = "UPDATE {$tabela} SET ". $this->makeFields() . " WHERE {$key} = {$id}";
         $db->exec($sql);
+
+
     }
 
     public static function delete($id) {
