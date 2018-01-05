@@ -115,6 +115,8 @@ class User extends Active {
     }
 
 
+
+
     public function updateUsername($id)
     {
         $db = DB::getConnection();
