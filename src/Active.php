@@ -27,11 +27,24 @@ class Active extends Db
 
     }
 
-    public static function delete($id) {
+    public  function delete($id) {
         $db = Db::getConnection();
         $tabela = static::$table;
         $key = static::$key;
-        $db->exec("DELETE FROM {$tabela} WHERE {$key} = {$id}");
+        try{
+            $deleteQuery = "DELETE FROM {$tabela} WHERE {$key} = :id";
+            $statement = $db->prepare($deleteQuery);
+            $statement->execute(array(':id'=>$id));
+
+            if($statement->rowCount()>0 ){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (PDOException $ex){
+            echo "An error occured ".$ex->getMessage();
+        }
     }
 
     public static function get($filter = "") {

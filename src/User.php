@@ -116,7 +116,7 @@ class User extends Active {
 
 
     public function redirectTo($page){
-        header("Location:$page");
+        header("Location:$page".".php");
     }
 
 }
