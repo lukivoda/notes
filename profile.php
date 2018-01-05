@@ -1,4 +1,12 @@
+<?php
+require("config.php");
+//we are saving the value from user from the session value
+if(isset($_SESSION['username'])) {
+    $username = ($user->isCookieValid() || isset($_SESSION['username'])) ? $_SESSION['username'] : '';
+}else{
+    $user->redirectTo("index");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +74,7 @@
                       <li><a href="mainpageloggedin.php">My Notes</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">Logged in as <b>Stevce</b></a></li>
+                      <li><a href="#">Logged in as <b><?php echo $username ?></b></a></li>
                     <li><a href="index.php?logout=1">Log out</a></li>
                   </ul>
               
@@ -85,7 +93,7 @@
                       <table class="table table-hover table-condensed table-bordered">
                           <tr data-target="#updateusername" data-toggle="modal">
                               <td>Username</td>
-                              <td>lukivoda</td>
+                              <td><?php echo $username ?></td>
                           </tr>
                           <tr data-target="#updateemail" data-toggle="modal">
                               <td>Email</td>

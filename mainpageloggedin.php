@@ -1,7 +1,11 @@
 <?php
 require("config.php");
 //we are saving the value from user from the session value
-$username =($user->isCookieValid() || isset($_SESSION['username']))?$_SESSION['username']:'';
+if(isset($_SESSION['username'])) {
+    $username = ($user->isCookieValid() || isset($_SESSION['username'])) ? $_SESSION['username'] : '';
+}else{
+    $user->redirectTo("index");
+}
 
 ?>
 

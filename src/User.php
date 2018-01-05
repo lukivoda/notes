@@ -115,7 +115,30 @@ class User extends Active {
     }
 
 
-    public function redirectTo($page){
+    public function updateUsername($id)
+    {
+        $db = DB::getConnection();
+        try {
+            $updateUsernameQuery = "UPDATE users SET username = :username WHERE user_id =:id";
+            $statement = $db->prepare($updateUsernameQuery);
+            $statement->execute(array(":username" => $this->username, ':id' => $id));
+
+            if ($statement->rowCount() > 0) {
+                $_SESSION['username'] = $this->username;
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (PDOException $ex) {
+            echo "An error occured " . $ex->getMessage();
+        }
+
+    }
+
+
+
+        public function redirectTo($page){
         header("Location:$page".".php");
     }
 
