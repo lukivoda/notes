@@ -7,6 +7,7 @@ class User extends Active {
     public $username;
     public $password;
     public $activation;
+    public $activation2;
     public static $key ="user_id";
     public static  $table ="users";
 
@@ -25,6 +26,25 @@ class User extends Active {
        }catch (PDOException $ex){
            echo "An error occured ".$ex->getMessage();
        }
+   }
+
+
+   public function activateNewEmail($newemail){
+
+       $db = DB::getConnection();
+       try{
+           $activateNewEmailQuery = "UPDATE users SET activation2 = :changed, email=:newEmail WHERE email= :email and activation2 = :activation2 LIMIT 1";
+           $statement = $db->prepare($activateNewEmailQuery);
+           $statement->execute(array(":changed" => 'changed','newEmail'=>$newemail,":email"=>$this->email,":activation2" => $this->activation2));
+           if ($statement->rowCount() === 1) {
+               return true;
+           } else {
+               return false;
+           }
+       }catch (PDOException $ex){
+           echo "An error occured ".$ex->getMessage();
+       }
+
    }
 
     public function login() {
@@ -65,6 +85,7 @@ class User extends Active {
                 $row = $this->getById($userId);
                 $_SESSION['user_id'] = $row->user_id;
                 $_SESSION['username'] = $row->username;
+                $_SESSION['email'] = $row->email;
                 $isValid =true;
             }else{
                 $isValid = false;
@@ -82,7 +103,7 @@ class User extends Active {
     public function logOut(){
         unset($_SESSION['user_id']);
         unset($_SESSION['username']);
-
+        unset($_SESSION['email']);
         if(isset($_COOKIE['rememberme'])){
             unset($_COOKIE['rememberme']);
             setcookie('rememberme',null,-1,'/');
@@ -137,6 +158,28 @@ class User extends Active {
         }
 
     }
+
+
+
+        public function updateAcivationCode2(){
+
+            $db = DB::getConnection();
+            try {
+                $updateAcivationCode2Query = "UPDATE users SET activation2 = :activation2 WHERE user_id =:user_id";
+                $statement = $db->prepare($updateAcivationCode2Query);
+                $statement->execute(array(":activation2" => $this->activation2, ':user_id' => $this->user_id));
+
+                if ($statement->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } catch (PDOException $ex) {
+                echo "An error occured " . $ex->getMessage();
+            }
+
+}
 
 
 

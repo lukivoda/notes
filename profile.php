@@ -3,6 +3,7 @@ require("config.php");
 //we are saving the value from user from the session value
 if(isset($_SESSION['username'])) {
     $username = ($user->isCookieValid() || isset($_SESSION['username'])) ? $_SESSION['username'] : '';
+    $email = ($user->isCookieValid() || isset($_SESSION['email'])) ? $_SESSION['email'] : '';
 }else{
     $user->redirectTo("index");
 }
@@ -97,7 +98,7 @@ if(isset($_SESSION['username'])) {
                           </tr>
                           <tr data-target="#updateemail" data-toggle="modal">
                               <td>Email</td>
-                              <td>stiv@mail.com</td>
+                              <td><?php echo $email ?></td>
                           </tr>
                           <tr data-target="#updatepassword" data-toggle="modal">
                               <td>Password</td>
@@ -132,7 +133,7 @@ if(isset($_SESSION['username'])) {
 
                   <div class="form-group">
                       <label for="username" >Username:</label>
-                      <input class="form-control" type="text" name="username" id="username" maxlength="30" value="">
+                      <input class="form-control" type="text" name="username" id="username" maxlength="30" value="<?php echo $username ?>">
                   </div>
                   
               </div>
@@ -168,7 +169,7 @@ if(isset($_SESSION['username'])) {
 
                   <div class="form-group">
                       <label for="email" >Email:</label>
-                      <input class="form-control" type="email" name="email" id="email" maxlength="50" value="">
+                      <input class="form-control" type="email" name="email" id="email" maxlength="50" value="<?php echo $email ?>">
                   </div>
                   
               </div>
